@@ -1,3 +1,11 @@
+### 피어 리뷰 (주니)
+
+erd 구성하는 것에 아직 미숙했는데 주니의 워크북을 보고 기본적인 틀을 알 수 있었습니다
+
+고객약관 이력을 추가로 만든 것이 인상적이고, 2번 미션에 유저 미션 성공을 추가해야 되는 부분을 놓친 것도 알 수 있었습니다.
+
+가게와 음식카테고리를 연결한 부분도 좋은 거 같습니다!
+
 ### 리뷰 작성하는 쿼리
 
 ```sql
@@ -10,7 +18,7 @@ VALUES(1,3,'음 너무 맛있어요 ...', 5, NOW());
 
 ```sql
 // 유저ID(1)
-SELECT profile_url, name, phone_number, phone_certification, user_point
+SELECT profile_url, name, phone_number, phone_certification, user_point, user_email
 FROM user
 WHERE user_id = 1
 ```
@@ -28,10 +36,10 @@ WHERE user_id = 1
 ```sql
 SELECT m.mission_info, m.point, um.is_complete, s.name
 FROM user_mission AS um
-JOIN mission AS m ON um.mission_id = m.mission_id
-JOIN store AS s ON m.store_id = s.store_id
+JOIN mission AS m ON um.mission_id = m.id
+JOIN store AS s ON m.store_id = s.id
 WHERE um.user_id = 1 AND um.is_complete = 'SUCCESS'
-ORDER BY um.user_mission.id DESC
+ORDER BY um.id DESC
 LIMIT 10 OFFSET 0;
 ```
 
