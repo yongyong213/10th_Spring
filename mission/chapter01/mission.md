@@ -30,7 +30,7 @@ SELECT m.mission_info, m.point, um.is_complete, s.name
 FROM user_mission AS um
 JOIN mission AS m ON um.mission_id = m.mission_id
 JOIN store AS s ON m.store_id = s.store_id
-WHERE um.user_id = 1
+WHERE um.user_id = 1 AND um.is_complete = 'SUCCESS'
 ORDER BY um.user_mission.id DESC
 LIMIT 10 OFFSET 0;
 ```
@@ -43,13 +43,18 @@ SELECT s.name, s.category_id, m.mission_info, m.point, m.mission_id
 FROM mission AS m
 JOIN store AS s ON m.store_id = s.store_id
 WHERE s.region_id = 2
+	AND m.mission_id NOT IN(
+		SELECT mission_id
+		FROM user_mission
+		WHERE user_id = 1
+	)
 ORDER BY m.mission_id DESC
 LIMIT 10 OFFSET 0
 
 -----------------------------------------------------------------
 // 해당 지역에서 미션 몇개 성공했나?
 SELECT COUNT(*) FROM user_mission AS um
-JOIN mission AS m ON um_mission_id = m.mission_id
+JOIN mission AS m ON um.mission_id = m.mission_id
 JOIN store AS s ON m.store_id = s.store_id
 WHERE um.user_id = 1 AND s.region_id = 2 AND um.is_complete = true
 ```
