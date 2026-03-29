@@ -1,7 +1,10 @@
 ### 피어리뷰(주니꺼)
-아직 안함
+![alt text](image.png)
+
+api 명세서 작성할 때, 페이징을 처음 접해봤는데 주니의 워크북을 보고 페이징에 관한 정보를 넘겨야 한다는 것을 알 수 있었다.
 
 ---
+
 ## 홈화면
 
 **API Endpoint:** /api/v1/home
@@ -13,9 +16,7 @@
 **Query Parameter**
 
 ```sql
-{
-	"regionName": "안암동"
-}
+/api/v1/home?regionName=안암동
 ```
 
 **Path Variable:** X
@@ -37,29 +38,38 @@
     "currentRegion": "안암동",
     "successMission": 7,
     "alarmCount": 99999,
-    "missions": [
-	    {
-	      "missionId": 1,
-	      "storeName": "반이학생마라탕",
-	      "missionContent": "10000원 이상의 식사시",
-	      "missionPoint": 500,
-	      "missionDeadline": 7
-	    },
-	    {
-	      "missionId": 2,
-	      "storeName": "반이학생마라탕",
-	      "missionContent": "10000원 이상의 식사시",
-	      "missionPoint": 500,
-	      "missionDeadline": 7
-	    },
-    ]
+    "missions": {
+	    "content": [
+		    {
+		      "missionId": 1,
+		      "storeName": "반이학생마라탕",
+		      "missionContent": "10000원 이상의 식사시",
+		      "missionPoint": 500,
+		      "missionDeadline": 7
+		    },
+		    {
+		      "missionId": 2,
+		      "storeName": "반이학생마라탕",
+		      "missionContent": "10000원 이상의 식사시",
+		      "missionPoint": 500,
+		      "missionDeadline": 7
+		    },
+	    ],
+	    "pageable":{
+		    "pageNumber": 0,
+		    "pageSize": 10
+		  },
+		  "isFirst": true,
+		  "isLast": false,
+		  "hasNext": true
+		}
   }
 }
 ```
 
 ## 마이페이지 리뷰 작성
 
-**API Endpoint:** /api/v1/stores/{store_id}/reviews/
+**API Endpoint:** /api/v1/stores/{storeId}/reviews
 
 **Method:** POST
 
@@ -81,28 +91,48 @@ Content-type: multipart/form-data
 
 **Request Body**
 
-|  |  |
-| --- | --- |
-| star | 5 |
-| content | “맛있어여ㅕ” |
-| photo_url | 사진 파일 |
+```sql
+{
+  "star": 5,
+  "content": "맛있어여ㅕ",
+  "photoUrl": "~~~"
+}
+```
 
 **Response Body**
 
-```sql
+```bnf
 {
   "isSuccess": true,
-  "code": "REVIEW200",
-  "message": "리뷰 작성이 성공했습니다.",
+  "code": "USER_MISSION200",
+  "message": "내 미션이 성공적으로 조회되었습니다.",
   "result": {
-    "reviewId": "1"
+    "myMissions": [
+      {
+        "userMissionId": 1,
+        "storeName": "반이학생마라탕",
+        "missionContent": "10000원 이상의 식사시",
+        "missionPoint": 500,
+        "missionDeadline": 7
+      },
+      {
+        "userMissionId": 2,
+        "storeName": "반이학생마라탕",
+        "missionContent": "10000원 이상의 식사시",
+        "missionPoint": 500,
+        "missionDeadline": 7
+      }
+    ],
+    "listSize": 1,
+    "hasNext": false,
+    "nextCursor": null
   }
 }
 ```
 
 ## 미션 목록 조회
 
-**API Endpoint:** /api/v1/users/user-missions
+**API Endpoint:** /api/v1/users/me/missions
 
 **Method:** GET
 
@@ -111,9 +141,7 @@ Content-type: multipart/form-data
 **Query Parameter**
 
 ```sql
-{
-	"isComplete"= true 이나 false
-}
+/api/v1/users/me/missions?isComplete=true
 ```
 
 **Path Variable:** X
@@ -146,7 +174,7 @@ Content-type: multipart/form-data
 	      "missionContent": "10000원 이상의 식사시",
 	      "missionPoint": 500,
 	      "missionDeadline": 7
-	    },
+	    }
     ]
   }
 }
@@ -156,7 +184,7 @@ Content-type: multipart/form-data
 
 **API Endpoint:** /api/v1/users/user-missions/{user_mission_id}
 
-**Method:** POST
+**Method:** PATCH
 
 **Request Header:** Authorization: Bearer {token}
 
@@ -199,7 +227,7 @@ Content-type: multipart/form-data
 
 **Method:** POST
 
-**Request Header:** X
+**Request Header:** content type: application/json 
 
 **Query Parameter**
 
@@ -229,24 +257,11 @@ Content-type: multipart/form-data
 ```sql
 {
   "isSuccess": true,
-  "code": "MY_MISSION200",
-  "message": "내 미션이 성공적으로 조회되었습니다.",
+  "code": "AUTH201",
+  "message": "회원가입 완료.",
   "result": {
 		"email": "ddd@naver.com",
-	  "password": "1234",
-	  "name": "레오",
-	  "gender": "MALE",
-	  "birth": "2003-12-02",
-	  "address": "경기도 안산시",
-	  "agreedTerms":[
-      { "termId": 1, "termName": "위치정보제공" },
-      { "termId": 3, "termName": "마케팅수신동의" }
-    ],
-	  "userFoods":[
-      { "foodId": 0, "foodName": "한식" },
-      { "foodId": 1, "foodName": "일식" },
-      { "foodId": 3, "foodName": "양식" }
-    ]
+	  "name": "레오"
 	}
 }
 ```
