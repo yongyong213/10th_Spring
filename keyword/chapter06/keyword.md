@@ -1,3 +1,24 @@
+- 피어리뷰 (주니꺼)
+![alt text](image.png)
+    service를 command랑 queryService로 나누고, readOnly를 사용하여 최적화한 부분이 인상 깊습니다!
+
+- 미션 스웨거 캡쳐
+- **미션 기록**
+    1. 리뷰 작성 쿼리
+        
+        ![alt text](image-1.png)
+        
+    2. [진행 중인/ 완료한] 나의 미션 보기
+        
+        ![alt text](image-2.png)
+        
+    3. 마이 페이지 화면 쿼리
+        
+        ![alt text](image-3.png)
+        
+    4. 홈 화면 쿼리
+
+        ![alt text](image-4.png)
 - JPA란?
     
     자바 객체와 관계형 데이터베이스 테이블을 매핑하여 데이터를 관리하는 ORM 기술 표준
