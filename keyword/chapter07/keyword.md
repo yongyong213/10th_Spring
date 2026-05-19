@@ -1,3 +1,8 @@
+- 피어리뷰 (주니꺼)
+    글로벌 DTO로 페이징 일반화하는 부분이 굉장히 좋은 것 같은데, 정확하게 이해가 아직 안가서 더 공부해봐야 할 것 같습니다!
+![alt text](image-1.png)
+![alt text](image-2.png)
+---
 - Page와 Slice
     
     **Slice**
